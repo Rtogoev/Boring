@@ -1,13 +1,12 @@
 package com.company;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.time.LocalDateTime;
 
 public class Main {
 
-    private static final int MAX_LINE_SIZE = 10000;
-    private static int speed;
+    private static final int MAX_LINE_SIZE = 100;
+    private static final int SPEED = 200;
 
     private final static String[] COLORS = new String[]{
             "\u001B[30m",
@@ -22,20 +21,13 @@ public class Main {
 
     public static final String ANSI_RESET = "\u001B[0m";
 
-    public static void main(String[] args) throws IOException, InterruptedException {
+    public static void main(String[] args) {
         // write your code here
-        inputParams();
         process();
     }
 
-    private static void inputParams() throws IOException {
-        System.out.println("input speed 0-100 fast, 200-500 slow:");
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        speed = Integer.parseInt(reader.readLine());
-    }
-
     private static boolean generateBoolean() {
-        return Math.random() > 0.5;
+        return Math.random() > 0.4 + (double) LocalDateTime.now().getSecond()/100;
     }
 
 
@@ -57,12 +49,8 @@ public class Main {
                 );
             }
             System.out.println();
-            sleep(generate(speed));
+            sleep(SPEED + LocalDateTime.now().getSecond() * 10);
         }
-    }
-
-    private static int generate(int max) {
-        return (int) (Math.random() * max);
     }
 
     private static String dotOrSpace(boolean dot) {
