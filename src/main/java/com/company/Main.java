@@ -1,12 +1,12 @@
 package com.company;
 
-import java.io.IOException;
+import java.awt.*;
 import java.time.LocalDateTime;
 
 public class Main {
 
-    private static final int MAX_LINE_SIZE = 100;
-    private static final int SPEED = 200;
+    public static final String ANSI_RESET = "\u001B[0m";
+    private static final int MINIMAL_SPEED = 200;
 
     private final static String[] COLORS = new String[]{
             "\u001B[30m",
@@ -18,16 +18,27 @@ public class Main {
             "\u001B[36m",
             "\u001B[37m"
     };
-
-    public static final String ANSI_RESET = "\u001B[0m";
+    private static int maxLineSize;
 
     public static void main(String[] args) {
-        // write your code here
+        initMaxLineSize();
         process();
     }
 
+    private static void initMaxLineSize() {
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        maxLineSize = (int) (width / 8);
+        System.out.println("with = " + width);
+        System.out.println("maxLineSize = " + maxLineSize);
+    }
+
     private static boolean generateBoolean() {
-        return Math.random() > 0.4 + (double) LocalDateTime.now().getSecond()/100;
+        return Math.random() > 0.4 + (double) getCurrentSecond() / 100;
+    }
+
+    private static int getCurrentSecond() {
+        return LocalDateTime.now().getSecond();
     }
 
 
@@ -41,7 +52,7 @@ public class Main {
 
     private static void process() {
         while (true) {
-            for (int part = 0; part < MAX_LINE_SIZE; part++) {
+            for (int part = 0; part < maxLineSize; part++) {
                 System.out.print(
                         dotOrSpace(
                                 generateBoolean()
@@ -49,7 +60,7 @@ public class Main {
                 );
             }
             System.out.println();
-            sleep(SPEED + LocalDateTime.now().getSecond() * 10);
+            sleep(MINIMAL_SPEED + getCurrentSecond() * 10);
         }
     }
 

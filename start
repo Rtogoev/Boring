@@ -1,0 +1,7 @@
+#!/bin/sh
+
+export DISPLAY=:0.0
+mvn clean
+mvn package
+cd target
+java -jar Boring-1.0-SNAPSHOT-jar-with-dependencies.jar
