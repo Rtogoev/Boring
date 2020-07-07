@@ -3,5 +3,6 @@
 export DISPLAY=:0.0
 mvn clean
 mvn package
+clear
 cd target
 java -jar Boring-1.0-SNAPSHOT-jar-with-dependencies.jar
