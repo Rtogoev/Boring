@@ -1,15 +1,11 @@
 "use strict";
 
 let inputString = prompt('abcdefghijklmnopqrstuvwxyz');
- for(let index = 0; index < inputString.length; index++) {
-	let symbol = inputString[index];
-	setTimeout(draw, (index + 1) * 1000, symbol);
- }
-
+draw(inputString, 0);
 
 	
-function draw(symbol) {
-	
+function draw(inputString, beginIndex) {
+	let symbol = inputString[beginIndex];
 	switch (symbol) {
 		case'a': {
 			document.body.style.background="rgb(255,0,0)";
@@ -44,6 +40,11 @@ function draw(symbol) {
     p.innerText = symbol;
     p.style.backgroundColor = randomColor();
     document.body.append(p);
+	
+	if(beginIndex == (inputString.length-1)) {
+		return;
+	}
+	setTimeout(draw, 1000, inputString, beginIndex + 1);
 }
 
 function randomColor() {
