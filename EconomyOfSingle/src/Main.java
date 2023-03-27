@@ -1,4 +1,6 @@
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.Period;
 import java.util.Scanner;
 
@@ -30,8 +32,17 @@ public class Main {
         int daysToSurvive = Period.between(LocalDate.now(), endDate).getDays();
         int moneyPerDay = money / daysToSurvive;
         System.out.println("money per day: " + moneyPerDay);
+        System.out.println("days: " + days(LocalDate.now(), LocalDate.now().plusDays(daysToSurvive)));
         System.out.println("Start day: " + LocalDate.now());
         System.out.println("End day: " + LocalDate.now().plusDays(daysToSurvive));
+    }
+
+    private static int days(LocalDate from, LocalDate two) {
+        return days(from.atTime(0, 0), two.atTime(0, 0));
+    }
+
+    private static int days(LocalDateTime from, LocalDateTime two) {
+        return (int) Duration.between(from, two).toDays();
     }
 
     public static void mode1(Scanner scanner) {
